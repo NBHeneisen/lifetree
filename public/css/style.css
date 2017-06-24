@@ -1,0 +1,24 @@
+#main {
+    position: absolute;
+    z-index: 0;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #303030;
+    color: white;
+}
+
+#search {
+    position: absolute;
+    left: 10px;
+}
+
+#login {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    }
