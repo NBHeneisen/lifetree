@@ -10,9 +10,15 @@ import Search from 'material-ui/svg-icons/action/search';
 import IconButton from 'material-ui/IconButton';
 
 class SpeciesSearch extends Component {
+  constructor() {
+    super();
+    this.searchSpecies = this.searchSpecies.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
 
   searchSpecies () {
-    axios.get('http://webservice.catalogueoflife.org/col/webservice?name=' + TextField.value + '&format=json&response=full')
+    console.log("searching species!");
+    axios.get('http://webservice.catalogueoflife.org/col/webservice?name=Mycteria americana&format=json&response=full')
     .then(function (response) {
       console.log(response.data.results);
     })
@@ -21,22 +27,32 @@ class SpeciesSearch extends Component {
     });
   }
 
+  _onChange (e) {
+    typeof(e);
+    return e;
+  }
+
+  handleClick () {
+    this.searchSpecies();
+  }
+
   render() {
-  return (
-    <div id="search">
-    <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-    <TextField
-      hintText="ex: Wood Stork"
-      floatingLabelText="Search"
-    />
-    </MuiThemeProvider>
-    <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-      <IconButton onClick={this.searchSpecies}>
-        <Search />
-      </IconButton>
-    </MuiThemeProvider>
-    </div>
-  );
+    return (
+      <div id="search">
+      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+      <TextField
+        onChange={this._onChange}
+        hintText="ex: Wood Stork"
+        floatingLabelText="Search"
+      />
+      </MuiThemeProvider>
+      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <IconButton onClick={this.handleClick}>
+          <Search />
+        </IconButton>
+      </MuiThemeProvider>
+      </div>
+    );
   }
 }
 
