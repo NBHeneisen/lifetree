@@ -16,8 +16,10 @@ class Main extends Component {
     this.state = {open: false};
   }
   
-  handleToggle = () => this.setState({open: !this.state.open});
-
+  handleToggle () {
+     this.setState({open: !this.state.open});
+  }
+  
   render() {
     return (
       <div id="main">

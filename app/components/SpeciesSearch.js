@@ -12,42 +12,44 @@ import IconButton from 'material-ui/IconButton';
 class SpeciesSearch extends Component {
   constructor() {
     super();
-    this.searchSpecies = this.searchSpecies.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      inputValue: ""
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+  }
+  handleInputChange(event) {
+    this.setState({ inputValue: event.target.value });
+  }
+  handleButtonClick() {
+    const searchCriteria = this.state.inputValue;
+  API.getSpeciesInfo(searchCriteria).then(this.props.getSpeciesInfo);
+    this.setState({ inputValue: "" });
   }
 
-  searchSpecies () {
-    console.log("searching species!");
-    axios.get('http://webservice.catalogueoflife.org/col/webservice?name=Mycteria americana&format=json&response=full')
-    .then(function (response) {
-      console.log(response.data.results);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-
-  _onChange (e) {
-    typeof(e);
-    return e;
-  }
-
-  handleClick () {
-    this.searchSpecies();
-  }
+  // searchSpecies () {
+  //   axios.get('http://webservice.catalogueoflife.org/col/webservice?name=Mycteria americana&format=json&response=full')
+  //   .then(function (response) {
+  //     console.log(response.data.results);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+  // }
 
   render() {
     return (
       <div id="search">
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
       <TextField
-        onChange={this._onChange}
+        onChange={this.handleInputChange}
+        value={this.state.inputValue}
         hintText="ex: Wood Stork"
         floatingLabelText="Search"
       />
       </MuiThemeProvider>
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-        <IconButton onClick={this.handleClick}>
+        <IconButton onClick={this.handleButtonClick}>
           <Search />
         </IconButton>
       </MuiThemeProvider>

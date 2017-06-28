@@ -27,3 +27,15 @@ mongoose.connect(db, function(error) {
 app.listen(PORT, function() {
   console.log("Now listening on port %s! Visit localhost:%s in your browser.", PORT, PORT);
 });
+
+
+var request = require ("request");
+
+search = "Mycteria americana"
+
+request('http://webservice.catalogueoflife.org/col/webservice?name=' + search + '&format=json&response=full', function (error, response, body) {
+  console.log('error:', error);
+  console.log('statusCode:', response && response.statusCode);
+  console.log('body:', body);
+});
+
