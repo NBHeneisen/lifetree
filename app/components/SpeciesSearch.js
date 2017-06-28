@@ -8,6 +8,7 @@ import axios from 'axios';
 import SvgIcon from 'material-ui/SvgIcon';
 import Search from 'material-ui/svg-icons/action/search';
 import IconButton from 'material-ui/IconButton';
+import API from '../utils/API';
 
 class SpeciesSearch extends Component {
   constructor() {
@@ -22,8 +23,11 @@ class SpeciesSearch extends Component {
     this.setState({ inputValue: event.target.value });
   }
   handleButtonClick() {
-    const searchCriteria = this.state.inputValue;
-  API.getSpeciesInfo(searchCriteria).then(this.props.getSpeciesInfo);
+    const species = this.state.inputValue;
+  API.getSpeciesInfo(species)
+    .then(function (speciesData) {
+      console.log(speciesData);
+    });
     this.setState({ inputValue: "" });
   }
 

@@ -2,8 +2,8 @@ import axios from "axios";
 
 const API = {
   // Retrieves species information from database
-  getSpeciesInfo: function() {
-    return axios.get("/api/lifesearch", {species});
+  getSpeciesInfo: function(species) {
+    return axios.get("/api/lifesearch", {params: {species}});
   },
 };
 

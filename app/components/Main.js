@@ -19,7 +19,7 @@ class Main extends Component {
   handleToggle () {
      this.setState({open: !this.state.open});
   }
-  
+
   render() {
     return (
       <div id="main">
