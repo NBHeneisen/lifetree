@@ -14,32 +14,31 @@ class SpeciesSearch extends Component {
   constructor() {
     super();
     this.state = {
-      inputValue: ""
+      inputValue: "",
+      speciesName: "",
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    console.log(this.state);
   }
+
   handleInputChange(event) {
     this.setState({ inputValue: event.target.value });
   }
+
   handleButtonClick() {
-    const species = this.state.inputValue;
-  API.getSpeciesInfo(species)
+    var species = this.state.inputValue;
+    console.log(species);
+    API.getSpeciesInfo(species)
     .then(function (speciesData) {
       console.log(speciesData);
+      this.setState({
+        speciesName: speciesData.name
+      })
+      this.props.setParent(speciesData.data.name);
     });
     this.setState({ inputValue: "" });
   }
-
-  // searchSpecies () {
-  //   axios.get('http://webservice.catalogueoflife.org/col/webservice?name=Mycteria americana&format=json&response=full')
-  //   .then(function (response) {
-  //     console.log(response.data.results);
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-  // }
 
   render() {
     return (

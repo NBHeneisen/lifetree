@@ -31,13 +31,11 @@ class Main extends Component {
 
   handleToggle () {
     this.setState({open: !this.state.open});
-    console.log("Toggled. Is drawer open? " + this.state.open);
   }
 
   
   handleClose () {
-    this.setState({open: false})
-    console.log("Closed. Is drawer open? " + this.state.open);
+    this.setState({open: false});
   };
 
 
