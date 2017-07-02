@@ -16,6 +16,7 @@ class SpeciesSearch extends Component {
     this.state = {
       inputValue: "",
       speciesName: "",
+      commonName: "",
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -28,14 +29,20 @@ class SpeciesSearch extends Component {
 
   handleButtonClick() {
     var species = this.state.inputValue;
-    console.log(species);
+    this.setState({
+      speciesName: species
+    })
     API.getSpeciesInfo(species)
-    .then(function (speciesData) {
+    .then((speciesData) => {
+      console.log(speciesData.data.results[0].accepted_name.name);
       console.log(speciesData);
+      console.log(speciesData.data.results[0].accepted_name.common_names[0].name);
       this.setState({
-        speciesName: speciesData.name
-      })
-      this.props.setParent(speciesData.data.name);
+        speciesName: speciesData.data.results[0].accepted_name.name,
+        commonName: speciesData.data.results[0].accepted_name.common_names[0].name,
+      });
+      console.log("On the other side of setState: " + this.state.speciesName);
+      this.props.setParent(this.state.speciesName, this.state.commonName  );
     });
     this.setState({ inputValue: "" });
   }

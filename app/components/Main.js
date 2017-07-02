@@ -15,18 +15,21 @@ class Main extends Component {
     super(props);
     this.state = {
       open: false,
-      currentSearch: "Homo sapiens"
+      currentSearch: "Homo sapiens",
+      commonName: "Human"
     };
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.setParent = this.setParent.bind(this);
   }
 
 
 
-  searchSet(newSearch) {
+  setParent(current, common) {
     this.setState({
-      currentSearch: newSearch
-    })
+      currentSearch: current,
+      commonName: common
+    });
   }
 
   handleToggle () {
@@ -43,7 +46,7 @@ class Main extends Component {
   render() {
     return (
       <div id="main">
-        <SpeciesSearch searchSet={this.searchSet} />
+        <SpeciesSearch setParent={this.setParent} />
         <Login />
         
         <h1
@@ -53,8 +56,11 @@ class Main extends Component {
         </h1>
         <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
         <Drawer open={this.state.open} width={325}>
-          <MenuItem>Menu Item</MenuItem>
-          <MenuItem>Menu Item 2</MenuItem>
+          <div className="species data">
+            <h3>{this.state.commonName}</h3>
+            <h4>{this.state.currentSearch}</h4>
+            <MenuItem>More Info</MenuItem>
+          </div>
         </Drawer>
         </MuiThemeProvider>
       </div>
