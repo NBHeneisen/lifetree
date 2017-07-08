@@ -15,8 +15,6 @@ class SpeciesSearch extends Component {
     super();
     this.state = {
       inputValue: "",
-      speciesName: "",
-      commonName: "",
       speciesObject: {},
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -35,12 +33,10 @@ class SpeciesSearch extends Component {
     API.getSpeciesInfo(species)
     .then((speciesData) => {
       this.setState({
-        speciesName: speciesData.data.results[0].accepted_name.name,
-        commonName: speciesData.data.results[0].accepted_name.common_names[0].name,
         speciesObject: speciesData,
       });
       console.log(this.state.speciesObject);
-      this.props.setParent(this.state.speciesName, this.state.commonName, this.state.speciesObject);
+      this.props.setParent(this.state.speciesObject.data);
     });
     this.setState({ inputValue: "" });
   }
