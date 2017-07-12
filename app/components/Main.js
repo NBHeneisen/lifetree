@@ -10,7 +10,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import API from '../utils/API';
-import d3 from 'd3';
+import MyTree from '../utils/d3wrap';
 
 class Main extends Component {
   constructor(props) {
@@ -139,19 +139,14 @@ class Main extends Component {
         <Login />
         
 
-        <div className="Kingdom">{this.state.speciesObject.tree.name}</div>
-        <div className="Phylum">{this.state.speciesObject.tree.children[0].name}</div>
-        <div className="Class">{this.state.speciesObject.tree.children[0].children[0].name}</div>
-        <div className="Order">{this.state.speciesObject.tree.children[0].children[0].children[0].name}</div>
-        <div className="Family">{this.state.speciesObject.tree.children[0].children[0].children[0].children[0].name}</div>
-        <div className="Genus">{this.state.speciesObject.tree.children[0].children[0].children[0].children[0].children[0].name}</div>
 
-        <h1
-          label="Toggle Drawer"
-          onClick={this.handleToggle}>
-          {this.state.currentSearch}
-        </h1>
 
+          <MyTree
+            data={this.state.speciesObject.tree}
+            width= {400}
+            height= {400}
+          />
+        
         {/*drawer*/}
         <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
         <Drawer open={this.state.open} width={325}>
