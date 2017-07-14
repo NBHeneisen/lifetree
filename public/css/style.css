@@ -27,16 +27,16 @@ body {
 
 .node circle {
   fill: #fff;
-  stroke: steelblue;
+  stroke: mediumturquoise;
   stroke-width: 3px;
 }
 
 .node text {
-  color: white;
+  color: #fff;
 }
 
 .link {
   fill: none;
-  stroke: #ccc;
+  stroke: #595959;
   stroke-width: 2px;
 }

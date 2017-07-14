@@ -12,43 +12,47 @@ module.exports = {
             }
             else {
               parsedBody = JSON.parse(body);
-              if(parsedBody.results[0].name_status==="common name") {
-                genus = parsedBody.results[0].accepted_name.genus;
+              if(!parsedBody.results) {
+                res.json({error: "Species not found."});
               } else {
-                genus = parsedBody.results[0].genus;
-              }
-              request('http://webservice.catalogueoflife.org/col/webservice?name=' + genus + '&format=json&response=full', function (error, response, genusBody) {
-                  
-                console.log('statusCode:', response && response.statusCode);
-                  if(error){  
-                    console.log('error:', error);
-                  }
-                  else {
-                    parsedGenusBody = JSON.parse(genusBody);
-                    var tree={
-                      "name": parsedGenusBody.results[0].classification[0].name,
-                      "children" : [{
-                        "name" : parsedGenusBody.results[0].classification[1].name,
+                if(parsedBody.results[0].name_status==="common name") {
+                  genus = parsedBody.results[0].accepted_name.genus;
+                } else {
+                  genus = parsedBody.results[0].genus;
+                }
+                request('http://webservice.catalogueoflife.org/col/webservice?name=' + genus + '&format=json&response=full', function (error, response, genusBody) {
+                    
+                  console.log('statusCode:', response && response.statusCode);
+                    if(error){  
+                      console.log('error:', error);
+                    }
+                    else {
+                      parsedGenusBody = JSON.parse(genusBody);
+                      var tree={
+                        "name": parsedGenusBody.results[0].classification[0].name,
                         "children" : [{
-                          "name" : parsedGenusBody.results[0].classification[2].name,
+                          "name" : parsedGenusBody.results[0].classification[1].name,
                           "children" : [{
-                            "name" : parsedGenusBody.results[0].classification[3].name,
+                            "name" : parsedGenusBody.results[0].classification[2].name,
                             "children" : [{
-                              "name" : parsedGenusBody.results[0].classification[4].name,
+                              "name" : parsedGenusBody.results[0].classification[3].name,
                               "children" : [{
-                                "name" : parsedGenusBody.results[0].name,
+                                "name" : parsedGenusBody.results[0].classification[4].name,
                                 "children" : [{
+                                  "name" : parsedGenusBody.results[0].name,
+                                  "children" : [{
+                                  }]
                                 }]
                               }]
                             }]
                           }]
                         }]
-                      }]
-                    };
-                    console.log({tree:tree, body:parsedBody});
-                    res.json({tree:tree, body:parsedBody});
-                  }
-              });
+                      };
+                      console.log({tree:tree, body:parsedBody});
+                      res.json({tree:tree, body:parsedBody});
+                    }
+                });
+              }
             }
         });
     },

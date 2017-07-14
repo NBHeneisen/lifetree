@@ -11,12 +11,14 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import API from '../utils/API';
 import MyTree from '../utils/d3wrap';
+import Dialog from 'material-ui/Dialog';
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
       //state of drawer (open or closed)
+      dialogOpen: false,
       open: false,
       //value of most recent button clicked
       selectedButtonValue: "",
@@ -38,9 +40,12 @@ class Main extends Component {
                     "name" : "Homo",
                     "children" : [{
                       "name" : "Sapiens",
-                      "children" : [{
+                      "children" : [
+                        {"name" : "Cro-magnonensis"},
+                        {"name" : "Grimaldiensis"},
+                        {"name" : "Sapiens"}
 
-                      }]
+                      ]
                     }]
                   }]
                 }]
@@ -55,6 +60,9 @@ class Main extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.setParent = this.setParent.bind(this);
     this.changeSpeciesNode = this.changeSpeciesNode.bind(this);
+    this.handleDialogClose = this.handleDialogClose.bind(this);
+    this.handleDialogOpen = this.handleDialogOpen.bind(this);
+
   }
 
   // Change the species being searched from the main component by clicking
@@ -65,14 +73,24 @@ class Main extends Component {
       this.setState({
         speciesObject: speciesData,
       });
-      console.log(this.state.speciesObject);
     });
     console.log("This function will change the species node");
   }
 
+  handleDialogOpen () {
+    this.setState({dialogOpen: true});
+    console.log(MyTree);
+  };
+
+  handleDialogClose () {
+    this.setState({dialogOpen: false});
+  };
+
   // Set parent's state from speciesSearch component
   setParent(data) {
-    if(data.body.results[0].name_status==="common name") {
+    if(!data.body) {
+      this.handleDialogOpen()
+    } else if(data.body.results[0].name_status==="common name") {
       this.setState({
         currentSearch: data.body.results[0].accepted_name.name,
         commonName: data.body.results[0].name,
@@ -161,6 +179,16 @@ class Main extends Component {
             </MenuItem>
           </div>
         </Drawer>
+        </MuiThemeProvider>
+        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <Dialog
+          title="Error"
+          modal={false}
+          open={this.state.dialogOpen}
+          onRequestClose={this.handleDialogClose}
+        >
+          No species found. Please try again.
+        </Dialog>
         </MuiThemeProvider>
       </div>
     );

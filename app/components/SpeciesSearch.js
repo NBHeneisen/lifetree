@@ -9,6 +9,9 @@ import SvgIcon from 'material-ui/SvgIcon';
 import Search from 'material-ui/svg-icons/action/search';
 import IconButton from 'material-ui/IconButton';
 import API from '../utils/API';
+import d3wrapjs from '../utils/d3wrap';
+import d3Wrap from 'react-d3-wrap';
+import * as d3 from 'd3';
 
 class SpeciesSearch extends Component {
   constructor() {
@@ -32,6 +35,9 @@ class SpeciesSearch extends Component {
     })
     API.getSpeciesInfo(species)
     .then((speciesData) => {
+       d3.select(".d3-wrap").select("g").attr("id","firstView");
+       d3.select("#firstView").remove();
+      //d3.select(".d3-wrap").selectAll("svg").remove();
       this.setState({
         speciesObject: speciesData,
       });
