@@ -41,10 +41,6 @@ class Main extends Component {
                     "children" : [{
                       "name" : "Sapiens",
                       "children" : [
-                        {"name" : "Cro-magnonensis"},
-                        {"name" : "Grimaldiensis"},
-                        {"name" : "Sapiens"}
-
                       ]
                     }]
                   }]

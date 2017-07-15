@@ -40,14 +40,19 @@ module.exports = {
                                 "name" : parsedGenusBody.results[0].classification[4].name,
                                 "children" : [{
                                   "name" : parsedGenusBody.results[0].name,
-                                  "children" : [{
-                                  }]
+                                  "children" : [
+                                  ]
                                 }]
                               }]
                             }]
                           }]
                         }]
                       };
+                      for (spec = 0; spec < parsedGenusBody.results[0].child_taxa.length; spec++) {
+                        console.log(parsedGenusBody.results[0].child_taxa[spec]);
+                        tree.children[0].children[0].children[0].children[0].children[0].children.push({"name" : parsedGenusBody.results[0].child_taxa[spec].name});
+                      }
+
                       console.log({tree:tree, body:parsedBody});
                       res.json({tree:tree, body:parsedBody});
                     }
